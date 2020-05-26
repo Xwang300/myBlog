@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cass.person.mapper.PersonMapper">
+   
+   <resultMap id="PersonResult" type="Person">
+       <result column="id" property="id"/>
+       <result column="name" property="name"/>
+       <result column="age" property="age"/>
+   </resultMap>
+    
+    <sql id="baseColumn">
+        SELECT
+        ID,
+        NAME,
+        AGE
+    </sql>
+    
+    <select id="selectPersonList" resultMap="PersonResult">
+        <include refid="baseColumn"/>
+        FROM
+        PERSON
+    </select>
+   
+    <select id="selectPersonById" resultType="Person" parameterType="Integer">
+        <include refid="baseColumn"/>
+        FROM
+        PERSON
+        WHERE
+        ID = #{id}
+    </select>
+    
+    <insert id="insertPerson" parameterType="Person">
+        INSERT
+        INTO
+        PERSON
+        (
+        NAME,
+        AGE
+        )
+        VALUES
+        (
+        #{name},
+        #{age}
+        )
+    </insert>
+
+    <update id="updatePerson" parameterType="Person">
+        UPDATE
+        PERSON
+        SET
+        <trim suffixOverrides=",">
+            <if test="name!=null and name!=''" >
+                NAME = #{name},
+            </if>
+            <if test="age!=null">
+                AGE = #{age},
+            </if>
+        </trim>
+        WHERE
+        ID = #{id}
+    </update>
+
+    <delete id="deletePersonById" parameterType="Integer">
+        DELETE
+        FROM
+        PERSON
+        WHERE
+        ID = #{id}
+    </delete>
+</mapper>
