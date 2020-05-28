@@ -1,5 +1,6 @@
 package com.cass.Exception;
 
+import com.cass.common.BaseConst;
 import com.cass.common.BaseResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public BaseResponse<String> exceptionHandler(Exception e, HttpServletRequest request){
         BaseResponse<String> response = new BaseResponse<>();
-        response.setResCode("1111");
+        response.setResCode(BaseConst.FAIL_CODE);
         response.setResMsg(e.getMessage());
         response.setResData(request.getRequestURI());
         e.printStackTrace();

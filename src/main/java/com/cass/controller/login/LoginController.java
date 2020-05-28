@@ -1,6 +1,7 @@
 package com.cass.controller.login;
 
 
+import com.cass.common.BaseConst;
 import com.cass.common.BaseResponse;
 import com.cass.config.security.AuthUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class LoginController {
         BaseResponse<AuthUserDetails> response = new BaseResponse<>();
         AuthUserDetails details = (AuthUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         response.setResData(details);
-        response.setResCode("0000");
+        response.setResCode(BaseConst.SUCCESS_CODE);
         response.setResMsg("登录成功！");
         return response;
     }
