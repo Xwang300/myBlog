@@ -3,6 +3,7 @@ package com.cass.blog;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @SpringBootApplication(scanBasePackages = {"com.cass.**"})
@@ -13,4 +14,9 @@ public class BlogApplication {
         SpringApplication.run(BlogApplication.class, args);
     }
 
+
+    @RequestMapping()
+    public String goHomePage(){
+        return "index";
+    }
 }

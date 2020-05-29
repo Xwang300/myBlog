@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController {
 
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+//    @Autowired
+//    private RedisTemplate redisTemplate;
 
     @RequestMapping("/loginSuccess")
     @ResponseBody
@@ -35,16 +35,16 @@ public class LoginController {
     public String loginPage(){
         return "/login";
     }
-
-    @RequestMapping("/redisTest")
-    @ResponseBody
-    public BaseResponse<String> redisTest(){
-        redisTemplate.opsForValue().set("key","val");
-        String key = (String)redisTemplate.opsForValue().get("key");
-        BaseResponse<String> response = new BaseResponse<>();
-        response.setResData(key);
-        return response;
-    }
+//
+//    @RequestMapping("/redisTest")
+//    @ResponseBody
+//    public BaseResponse<String> redisTest(){
+//        redisTemplate.opsForValue().set("key","val");
+//        String key = (String)redisTemplate.opsForValue().get("key");
+//        BaseResponse<String> response = new BaseResponse<>();
+//        response.setResData(key);
+//        return response;
+//    }
 
 
 }

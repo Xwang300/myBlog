@@ -39,20 +39,20 @@ spring:
     #静态资源
   resources:
     static-locations: classpath:/
-  redis:
-    host: 122.51.201.14
-    port: 6379
-    database: 0
-    timeout: 1000s
-    jedis:
-      pool:
-        max-idle: 500
-        min-idle: 50
-        max-wait: -1
-        max-active: -1
-  cache:
-    redis:
-      time-to-live: -1
+#  redis:
+#    host: 122.51.201.14
+#    port: 6379
+#    database: 0
+#    timeout: 1000s
+#    jedis:
+#      pool:
+#        max-idle: 500
+#        min-idle: 50
+#        max-wait: -1
+#        max-active: -1
+#  cache:
+#    redis:
+#      time-to-live: -1
 
 #  #spring config
 #  security:
