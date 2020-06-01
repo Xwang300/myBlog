@@ -8,6 +8,7 @@
     <typeAliases>
         <package name="com.cass.user.domain"/>
         <package name="com.cass.person.domain"/>
+        <package name="com.cass.archives.domain"/>
     </typeAliases>
     
 </configuration>

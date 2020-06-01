@@ -14,9 +14,4 @@ public class BlogApplication {
         SpringApplication.run(BlogApplication.class, args);
     }
 
-
-    @RequestMapping()
-    public String goHomePage(){
-        return "index";
-    }
 }

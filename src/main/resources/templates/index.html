@@ -52,7 +52,7 @@
 
 
 <!--顶部图片-->
-<div class="m-bg-class_outer" style="width: 100%;height: 100%">
+<div class="m-bg-class_outer" style="width: 100%;height: 100%; min-height: 750px;">
     <img src="../static/images/bg.jpg" th:src="@{static/images/bg.jpg}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
     <div class="m-bg-class_cover" align="center">
         <div class="m-margin-top-maxx" align="center">
@@ -91,13 +91,13 @@
         <h5 class="m-font-size-text-init-title">如果你自己还没有做到，</h5>
         <h5 class="m-font-size-text-init-title">我希望，你有勇气从头再来!</h5>
         <div id="waypoint" class="ui m-margin-top-large" align="center">
-            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="home icon"></i>首页</a>
-            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="clone outline icon"></i>分类</a>
-            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="clock icon"></i>时间轴</a>
+            <a href="#" th:href="@{/home}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{/article}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="clone outline icon"></i>文章</a>
+            <a href="#" th:href="@{/archives}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="clock icon"></i>时间轴</a>
 <!--            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" th:classappend="${n==5} ? 'active'"><i class="music icon"></i>音乐盒</a>-->
-            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="book icon"></i>留言板</a>
-            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="pencil alternate icon"></i>友人帐</a>
-            <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="image icon"></i>照片墙</a>
+            <a href="#" th:href="@{/message}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="book icon"></i>留言板</a>
+            <a href="#" th:href="@{/friend}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="pencil alternate icon"></i>友人帐</a>
+            <a href="#" th:href="@{/picture}" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="image icon"></i>照片墙</a>
             <a href="#" class="ui circular icon button m-opacity-small m-item item m-mobile-hide m-index-btn" ><i class="info icon"></i>关于我</a>
         </div>
         <div class="hiddenDiv"></div>
