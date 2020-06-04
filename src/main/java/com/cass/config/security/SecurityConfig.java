@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().and().csrf().disable().httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/admin/**").authenticated()
                 .antMatchers("/**").permitAll()
                 .anyRequest()
                 .authenticated()
@@ -45,23 +46,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .successForwardUrl("/login/loginSuccess")
-                .permitAll()
+                .failureForwardUrl("/login/loginFail")
                 .and()
                 .exceptionHandling().accessDeniedHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e)-> {
                         BaseResponse<String> response = new BaseResponse<>();
                         e.printStackTrace();
                         response.setResMsg("您没有权限");
                         response.setResCode("1111");
-                        httpServletResponse.setContentType("text/plain;charset=utf-8");
-                        httpServletResponse.getWriter().write(JSON.toJSONString(response));
+                        httpServletResponse.sendRedirect("/blog/login/noAuth");
+//                        httpServletResponse.setContentType("text/plain;charset=utf-8");
+//                        httpServletResponse.getWriter().write(JSON.toJSONString(response));
 
                 }).authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e)->{
-                        BaseResponse<String> response = new BaseResponse<>();
                         e.printStackTrace();
-                        response.setResMsg("请先登录");
-                        response.setResCode("1111");
-                        httpServletResponse.setContentType("text/plain;charset=utf-8");
-                        httpServletResponse.getWriter().write(JSON.toJSONString(response));
+                        httpServletResponse.sendRedirect("/blog/login/noSignIn");
+//                        httpServletResponse.setContentType("text/plain;charset=utf-8");
+//                        httpServletResponse.getWriter().write(JSON.toJSONString(response));
         });
 
         http.logout().logoutSuccessUrl("/login");

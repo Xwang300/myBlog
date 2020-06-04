@@ -6,10 +6,15 @@ import com.cass.common.BaseResponse;
 import com.cass.config.security.AuthUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/login")
@@ -20,20 +25,44 @@ public class LoginController {
 //    private RedisTemplate redisTemplate;
 
     @RequestMapping("/loginSuccess")
-    @ResponseBody
-    public BaseResponse<AuthUserDetails> login(){
-        BaseResponse<AuthUserDetails> response = new BaseResponse<>();
-        AuthUserDetails details = (AuthUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        response.setResData(details);
-        response.setResCode(BaseConst.SUCCESS_CODE);
-        response.setResMsg("登录成功！");
-        return response;
+    public String loginSuccess(){
+//        BaseResponse<AuthUserDetails> response = new BaseResponse<>();
+//        AuthUserDetails details = (AuthUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        response.setResData(details);
+//        response.setResCode(BaseConst.SUCCESS_CODE);
+//        response.setResMsg("登录成功！");
+        return "admin/blogs";
+    }
+
+    @RequestMapping("loginFail")
+    public String loginFail(Model model){
+        model.addAttribute("fail",true);
+        return "admin/login";
     }
 
 
     @RequestMapping()
     public String loginPage(){
-        return "/login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() &&
+            !(authentication instanceof AnonymousAuthenticationToken)){
+            return "admin/blogs";
+        }
+        return "admin/login";
+    }
+
+    @RequestMapping("/noAuth")
+    public String noAuth(Model model){
+        model.addAttribute("noAuth","您没有权限访问！");
+        model.addAttribute("fail",true);
+        return "admin/login";
+    }
+
+    @RequestMapping("/noSignIn")
+    public String noLogin(Model model){
+        model.addAttribute("noAuth","请先登录！");
+        model.addAttribute("fail",true);
+        return "admin/login";
     }
 //
 //    @RequestMapping("/redisTest")

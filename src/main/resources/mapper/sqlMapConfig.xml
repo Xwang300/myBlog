@@ -9,6 +9,7 @@
         <package name="com.cass.user.domain"/>
         <package name="com.cass.person.domain"/>
         <package name="com.cass.archives.domain"/>
+        <package name="com.cass.picture.domain"/>
     </typeAliases>
     
 </configuration>

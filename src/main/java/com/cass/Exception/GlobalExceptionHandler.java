@@ -1,10 +1,10 @@
 package com.cass.Exception;
 
-import com.cass.common.BaseConst;
-import com.cass.common.BaseResponse;
+
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    @ResponseBody
-    public BaseResponse<String> exceptionHandler(Exception e, HttpServletRequest request){
-        BaseResponse<String> response = new BaseResponse<>();
-        response.setResCode(BaseConst.FAIL_CODE);
-        response.setResMsg(e.getMessage());
-        response.setResData(request.getRequestURI());
-        e.printStackTrace();
-        return response;
+    public ModelAndView exceptionHandler(Exception e, HttpServletRequest request){
+        ModelAndView model = new ModelAndView("/error/error");
+        model.addObject("url",request.getRequestURI());
+        model.addObject("message",e.getMessage());
+        model.addObject("stackTrace",e.getStackTrace());
+//        e.printStackTrace();
+        return model;
     }
 }

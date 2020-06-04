@@ -30,7 +30,7 @@
             <a href="#" th:href="@{/message}" class="m-item item m-mobile-hide"><i class="book icon"></i>留言板</a>
             <a href="#" th:href="@{/friend}" class="m-item item m-mobile-hide"><i class="pencil alternate icon"></i>友人帐</a>
             <a href="#" th:href="@{/picture}" class="active m-item item m-mobile-hide"><i class="image icon"></i>照片墙</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <a href="#" th:href="@{/info}" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--</div>-->
             <!--            <div class="right m-item item m-mobile-hide">-->
             <!--                <form name="search" action="#" method="post" target="_blank">-->
@@ -61,129 +61,23 @@
 
 <!--照片墙-->
 <div id="picture-main">
-
-    <article class="thumb">
+    <article class="thumb" th:each="picture:${pictureList}">
         <div class="ma5-gallery">
             <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
+                <a href="../static/images/backimg.jpg" th:href="${picture.url}">
+                    <div class="picture-zmki_px">
+                    <img  style="width: auto; height: 100%;"  src="../static/images/backimg.jpg" th:src="${picture.url}">
+                    </div>
                 </a>
-                <div class="m-picture-text">起风了</div>
+                <div class="m-picture-text" th:text="${picture.name}">起风了</div>
                 <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
+                    <div style="font-size: large;" th:text="${picture.name}">起风了</div>
+                    <div style="font-size: small" class="m-margin-top"><span th:text="${#dates.format(picture.createTime,'yyyy-MM-dd')}">2020-02-02</span> &nbsp;<span th:text="${picture.place}"></span></div>
+                    <p style="font-size: small" th:text="${picture.description}">我曾难自拔于世界之大，也沉迷于其中梦话</p>
                 </div>
             </div>
         </div>
     </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="thumb">
-        <div class="ma5-gallery">
-            <div class="rthumbnail">
-                <a href="../static/images/backimg.jpg" th:href="@{static/images/backimg.jpg}">
-                    <img class="picture-zmki_px" src="../static/images/backimg.jpg" th:src="@{static/images/backimg.jpg}">
-                </a>
-                <div class="m-picture-text">起风了</div>
-                <div  class="rcaption">
-                    <div style="font-size: large;">起风了</div>
-                    <div style="font-size: small" class="m-margin-top">2020-02-02 &nbsp;深圳</div>
-                    <p style="font-size: small">我曾难自拔于世界之大，也沉迷于其中梦话</p>
-                </div>
-            </div>
-        </div>
-    </article>
-
-
 </div>
 
 
