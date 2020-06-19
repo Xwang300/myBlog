@@ -31,12 +31,13 @@ public class LoginController {
 //        response.setResData(details);
 //        response.setResCode(BaseConst.SUCCESS_CODE);
 //        response.setResMsg("登录成功！");
-        return "admin/blogs";
+        return "admin/index";
     }
 
     @RequestMapping("loginFail")
     public String loginFail(Model model){
         model.addAttribute("fail",true);
+        model.addAttribute("noAuth","用户名或密码错误");
         return "admin/login";
     }
 
@@ -46,7 +47,7 @@ public class LoginController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() &&
             !(authentication instanceof AnonymousAuthenticationToken)){
-            return "admin/blogs";
+            return "admin/index";
         }
         return "admin/login";
     }

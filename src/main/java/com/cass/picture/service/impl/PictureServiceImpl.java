@@ -23,4 +23,14 @@ public class PictureServiceImpl implements IPictureService {
     public List<Picture> selectAllPictures() {
         return pictureMapper.selectAllPictures();
     }
+
+    @Override
+    public Integer insertPicture(Picture picture) {
+        return pictureMapper.insertPicture(picture);
+    }
+
+    @Override
+    public Integer deletePictureById(int id) {
+        return pictureMapper.deletePictureById(id);
+    }
 }

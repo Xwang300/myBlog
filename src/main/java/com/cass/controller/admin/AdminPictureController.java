@@ -1,5 +1,7 @@
 package com.cass.controller.admin;
 
+import com.cass.common.BaseConst;
+import com.cass.common.BaseResponse;
 import com.cass.picture.domain.Picture;
 import com.cass.picture.service.IPictureService;
 import com.github.pagehelper.PageHelper;
@@ -7,10 +9,10 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,10 +42,23 @@ public class AdminPictureController {
         return "admin/pictures-input";
     }
 
+
     @RequestMapping(value = "addPicture",method = RequestMethod.POST)
     public String addPicture(Model model, Picture picture){
-        picture.toString();
-
-        return "admin/pictures";
+        pictureService.insertPicture(picture);
+        model.addAttribute("operation",true);
+        return "admin/pictures-input";
     }
+
+    @RequestMapping(value = "deletePicture",method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse<String> deletePicture(@RequestParam("id") int id){
+        BaseResponse<String> baseResponse = new BaseResponse<>();
+        pictureService.deletePictureById(id);
+        baseResponse.setResCode(BaseConst.SUCCESS_CODE);
+        baseResponse.setResMsg("删除成功!");
+        baseResponse.setResData("");
+        return baseResponse;
+    }
+
 }

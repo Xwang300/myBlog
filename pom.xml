@@ -97,6 +97,13 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.10</version>
         </dependency>
+
+
+<!--        elasticSearch-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

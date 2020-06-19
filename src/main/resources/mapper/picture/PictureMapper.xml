@@ -29,4 +29,32 @@
         CREATE_TIME
         DESC
     </select>
+
+    <insert id="insertPicture" parameterType="Picture">
+        INSERT
+        INTO
+        PICTURES
+        (
+        NAME,
+        PLACE,
+        CREATE_TIME,
+        DESCRIPTION,
+        URL
+        )
+        VALUES
+        (
+        #{name},
+        #{place},
+        now(),
+        #{description},
+        #{url}
+        )
+    </insert>
+
+    <delete id="deletePictureById" parameterType="Integer">
+        DELETE
+        FROM
+        PICTURES
+        WHERE ID = #{id}
+    </delete>
 </mapper>

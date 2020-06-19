@@ -12,4 +12,7 @@ public interface IPictureService {
 
     List<Picture> selectAllPictures();
 
+    Integer insertPicture(Picture picture);
+
+    Integer deletePictureById(int id);
 }

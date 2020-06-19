@@ -24,7 +24,7 @@
           <div class="ui dropdown item">
             <div class="text">
               <img class="ui avatar image" src="../../static/images/me.jpg" th:src="@{/static/images/me.jpg}">
-              <span>oneStar</span>
+              <span>逆光飞行</span>
             </div>
             <i class="dropdown icon"></i>
             <div class="menu">
@@ -68,13 +68,13 @@
                 <div class="item" data-value="翻译">翻译</div>
               </div>
             </div>
-            <input type="text" name="title" placeholder="标题">
+            <input type="text" name="title" id="title" placeholder="标题">
           </div>
         </div>
 
         <div class="required field">
           <div class="" id="md-content" style="z-index: 1 !important;">
-            <textarea placeholder="博客内容" name="content" style="display: none" ></textarea>
+            <textarea placeholder="博客内容" name="content" id="content" style="display: none"></textarea>
           </div>
         </div>
 
@@ -84,65 +84,67 @@
               <label class="ui compact teal basic label">分类</label>
               <div class="ui fluid selection dropdown">
                 <!--新增-->
-                <input type="hidden" name="type.id" >
+                <input type="hidden" name="type.id">
                 <!--编辑-->
-                <input type="hidden" name="typeId" >
+                <input type="hidden" id="type" name="typeId">
                 <i class="dropdown icon"></i>
                 <div class="default text">分类</div>
-                <div class="menu">
-                  <div class="item" data-value="1">我的故事</div>
+                <div class="menu" >
+                  <div class="item" th:each="articleType:${articleTypes}" th:data-value="${articleType.id}" th:text="${articleType.name}">我的故事</div>
                 </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="required field">
+              <div class="ui left labeled input">
+                <label class="ui teal basic label">首图</label>
+                <input type="text" name="firstPicture" id="firstPicture" placeholder="首图引用地址">
               </div>
             </div>
           </div>
 
           <div class="required field">
-            <div class="ui left labeled input">
-              <label class="ui teal basic label">首图</label>
-              <input type="text" name="firstPicture" placeholder="首图引用地址">
-            </div>
+            <textarea name="description" id="description" placeholder="博客描述..." maxlength="200"></textarea>
           </div>
+
+          <div class="inline fields">
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" id="recommend" name="recommend" class="hidden" value="1"
+                       onclick="this.value=(this.value==1)?2:1">
+                <label for="recommend" style="color: white;">时间轴</label>
+              </div>
+            </div>
+            <!--          <div class="field">-->
+            <!--            <div class="ui checkbox">-->
+            <!--              <input type="checkbox" id="shareStatement" name="shareStatement" class="hidden">-->
+            <!--              <label for="shareStatement" style="color: white;">转载声明</label>-->
+            <!--            </div>-->
+            <!--          </div>-->
+            <!--          <div class="field">-->
+            <!--            <div class="ui checkbox">-->
+            <!--              <input type="checkbox" id="appreciation" name="appreciation" class="hidden">-->
+            <!--              <label for="appreciation" style="color: white;">赞赏</label>-->
+            <!--            </div>-->
+            <!--          </div>-->
+            <!--          <div class="field">-->
+            <!--            <div class="ui checkbox">-->
+            <!--              <input type="checkbox" id="commentabled" name="commentabled" class="hidden">-->
+            <!--              <label for="commentabled" style="color: white;">评论</label>-->
+            <!--            </div>-->
+            <!--          </div>-->
+          </div>
+
+          <div class="ui error message"></div>
+
+          <div class="ui right aligned container">
+            <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+            <button type="button" id="save-btn" onclick="saveArticle('0')" class="ui secondary button">保存</button>
+            <button type="button" id="publish-btn" onclick="saveArticle('1')" class="ui teal button">发布</button>
+          </div>
+
         </div>
-
-        <div class="required field">
-          <textarea name="description" placeholder="博客描述..." maxlength="200"></textarea>
-        </div>
-
-        <div class="inline fields">
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" id="recommend" name="recommend" checked class="hidden">
-              <label for="recommend">推荐</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" id="shareStatement" name="shareStatement" class="hidden">
-              <label for="shareStatement">转载声明</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" id="appreciation" name="appreciation" class="hidden">
-              <label for="appreciation">赞赏</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" id="commentabled" name="commentabled" class="hidden">
-              <label for="commentabled">评论</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="ui error message"></div>
-
-        <div class="ui right aligned container">
-          <button type="button" class="ui button" onclick="window.history.go(-1)" >返回</button>
-          <button type="button" id="save-btn" class="ui secondary button">保存</button>
-          <button type="button" id="publish-btn" class="ui teal button">发布</button>
-        </div>
-
       </form>
     </div>
   </div>
@@ -217,7 +219,9 @@
   <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/static/lib/editormd/editormd.min.js}"></script>
 
 
-  <script>
+  <script type="text/javascript" th:inline="javascript">
+
+    var rootUrl=[[${#httpServletRequest.getContextPath()}]];
 
       // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
 
@@ -280,58 +284,117 @@
       on : 'hover'
     });
 
-    $('#save-btn').click(function () {
-      $('[name="published"]').val(false);
-      $('#blog-form').submit();
-    });
+    // $('#save-btn').click(function () {
+    //   $('[name="published"]').val(false);
+    //   $('#blog-form').submit();
+    // });
 
 
-    $('#publish-btn').click(function () {
-      $('[name="published"]').val(true);
-      $('#blog-form').submit();
-    });
+    // $('#publish-btn').click(function () {
+    //   $('[name="published"]').val(true);
+    //   $('#blog-form').submit();
+    // });
 
 
 
-    $('.ui.form').form({
-      fields : {
-        title : {
-          identifier: 'title',
-          rules: [{
-            type : 'empty',
-            prompt: '标题：请输入博客标题'
-          }]
-        },
-        content : {
-          identifier: 'content',
-          rules: [{
-            type : 'empty',
-            prompt: '标题：请输入博客内容'
-          }]
-        },
-        typeId : {
-          identifier: 'type.id',
-          rules: [{
-            type : 'empty',
-            prompt: '标题：请输入博客分类'
-          }]
-        },
-        firstPicture : {
-          identifier: 'firstPicture',
-          rules: [{
-            type : 'empty',
-            prompt: '标题：请输入博客首图'
-          }]
-        },
-        description : {
-          identifier: 'description',
-          rules: [{
-            type : 'empty',
-            prompt: '标题：请输入博客描述'
-          }]
-        }
+    // $('.ui.form').form({
+    //   fields : {
+    //     title : {
+    //       identifier: 'title',
+    //       rules: [{
+    //         type : 'empty',
+    //         prompt: '标题：请输入博客标题'
+    //       }]
+    //     },
+    //     content : {
+    //       identifier: 'content',
+    //       rules: [{
+    //         type : 'empty',
+    //         prompt: '标题：请输入博客内容'
+    //       }]
+    //     },
+    //     typeId : {
+    //       identifier: 'type.id',
+    //       rules: [{
+    //         type : 'empty',
+    //         prompt: '标题：请输入博客分类'
+    //       }]
+    //     },
+    //     firstPicture : {
+    //       identifier: 'firstPicture',
+    //       rules: [{
+    //         type : 'empty',
+    //         prompt: '标题：请输入博客首图'
+    //       }]
+    //     },
+    //     description : {
+    //       identifier: 'description',
+    //       rules: [{
+    //         type : 'empty',
+    //         prompt: '标题：请输入博客描述'
+    //       }]
+    //     }
+    //   }
+    // });
+
+
+    function saveArticle(draft){
+      var title = $("#title").val();
+      var content = $("#content").val();
+      var typeId = $("#type").val();
+      var picture = $("#firstPicture").val();
+      var description = $("#description").val();
+      var timeScroll = $("#recommend").val();
+
+      if (title==null||title==''){
+        alert("请输入文章标题!")
+        return;
       }
-    });
+      if (content==null||content==''){
+        alert("请输入文章内容!")
+        return;
+      }
+      if (typeId==null||typeId==''){
+        alert("请选择文章分类!")
+        return;
+      }
+      if (picture==null||picture==''){
+        alert("请输入文章首图!")
+        return;
+      }
+      if (description==null||description==''){
+        alert("请输入文章描述!")
+        return;
+      }
+
+      var article = {
+        'title':title,
+        'articleType':typeId,
+        'type':timeScroll,
+        'draft':draft,
+        'content':content,
+        'picture':picture,
+        'description':description
+      };
+
+      article = JSON.stringify(article);
+
+      $.ajax({
+        type : 'POST',
+        url : rootUrl+'/admin/article/addArticle',
+        dataType : 'json',
+        contentType:"application/json;charset=utf-8",
+        data : article,
+        success:function (data) {
+          if("00000"==data.resCode){
+            alert(data.resMsg);
+            window.location.href = rootUrl+"/admin/article"
+          }else{
+            alert(data.resMsg);
+          }
+        }
+      })
+    }
 
   </script>
 </body>

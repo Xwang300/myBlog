@@ -69,12 +69,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr align="center">
-            <td >1</td>
-            <td>我的故事</td>
+          <tr align="center" th:each="type:${pageInfo.list}">
+            <td th:text="${type.id}">1</td>
+            <td th:text="${type.name}">我的故事</td>
             <td>
-              <a href="#" class="ui mini teal basic button">编辑</a>
-              <a href="#" onclick="return confirm('确定要删除该分类吗？三思啊! 删了可就没了！')" class="ui mini red basic button">删除</a>
+<!--              <a href="#" class="ui mini teal basic button">编辑</a>-->
+              <a href="javascript:void(0);" th:onclick="deleteOperation([[${type.id}]])" class="ui mini red basic button">删除</a>
             </td>
           </tr>
         </tbody>
@@ -83,15 +83,16 @@
             <th colspan="6" >
               <div class="ui inverted divided stackable grid">
                 <div class="three wide column" align="center">
-                  <a class="item">上一页</a>
+                  <a class="item" th:href="@{/admin/type(pageNum=${pageInfo.pages}-1)}">上一页</a>
                 </div>
 
                 <div class="ten wide column" align="center">
-                  <p>第 <span></span> 页，共 <span></span> 页，有 <span></span> 个分类</p>
+                  <p>第 <span th:text="${pageInfo.pages}"></span> 页，共 <span th:text="${pageInfo.total}"></span> 条</p>
+                  <!--                    ，有 <span></span> 个分类</p>-->
                 </div>
 
                 <div class="three wide column" align="center">
-                  <a class="item">下一页</a>
+                  <a class="item" th:href="@{/admin/type(pageNum=${pageInfo.pages}+1)}">下一页</a>
                 </div>
               </div>
               <div align="center">
@@ -179,8 +180,9 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 
-  <script>
+<script type="text/javascript" th:inline="javascript">
 
+  var rootUrl=[[${#httpServletRequest.getContextPath()}]];
       // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
 
       // // 运行时间统计
@@ -237,6 +239,22 @@
           .closest('.message')
           .transition('fade');
       });
+
+      function deleteOperation(id){
+        var flag = confirm('确定要删除该类型吗？三思啊! 删了可就没了！')
+        if(flag){
+          $.ajax({
+            type : 'GET',
+            url : rootUrl+'/admin/type/deleteType?id='+id,
+            success: function (data) {
+              if ("00000"==data.resCode){
+                alert(data.resMsg);
+                window.location.reload();
+              }
+            }
+          })
+        }
+      }
 
   </script>
 </body>

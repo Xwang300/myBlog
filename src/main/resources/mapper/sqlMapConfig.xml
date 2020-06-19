@@ -10,6 +10,7 @@
         <package name="com.cass.person.domain"/>
         <package name="com.cass.archives.domain"/>
         <package name="com.cass.picture.domain"/>
+        <package name="com.cass.article.domain"/>
     </typeAliases>
     
 </configuration>

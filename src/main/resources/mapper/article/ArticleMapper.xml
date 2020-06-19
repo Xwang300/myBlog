@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cass.article.mapper.ArticleMapper">
+
+    <resultMap id="ArticleTypeResult" type="ArticleType">
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+    </resultMap>
+
+    <select id="selectAllTypes" resultMap="ArticleTypeResult">
+        SELECT
+        ID,
+        NAME
+        FROM
+        ARTICLE_TYPE
+    </select>
+
+    <insert id="insertArticleType" parameterType="String">
+        INSERT INTO
+        ARTICLE_TYPE
+        (
+        NAME
+        )
+        VALUES
+        (
+        #{name}
+        )
+    </insert>
+
+
+    <delete id="deleteTypeById" parameterType="Integer">
+        DELETE
+        FROM
+        ARTICLE_TYPE
+        WHERE
+        ID = #{id}
+    </delete>
+
+
+    <resultMap id="ArticleResult" type="Article">
+        <result column="ID" property="id"/>
+        <result column="TITLE" property="title"/>
+        <result column="ARTICLE_TYPE" property="articleType"/>
+        <result column="TYPE" property="type"/>
+        <result column="DRAFT" property="draft"/>
+        <result column="CONTENT" property="content"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="DESCRIPTION" property="description"/>
+        <result column="PICTURE" property="picture"/>
+    </resultMap>
+
+    <select id="selectAllArticle" resultMap="ArticleResult">
+        SELECT
+        a.ID,
+        a.TITLE,
+        b.NAME ARTICLE_TYPE,
+        a.TYPE,
+        a.DRAFT,
+        a.CONTENT,
+        DATE_FORMAT(a.CREATE_TIME,'%Y-%m-%d %H:%I:%S') CREATE_TIME
+        FROM
+        ARTICLE a
+        LEFT JOIN
+        ARTICLE_TYPE b
+        ON
+        a.ARTICLE_TYPE = b.ID
+        ORDER BY
+        a.CREATE_TIME
+        DESC
+    </select>
+
+
+    <delete id="deleteArticleById" parameterType="Integer">
+        DELETE
+        FROM
+        ARTICLE
+        WHERE
+        ID = #{id}
+    </delete>
+
+    <insert id="addArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        ARTICLE
+        (
+        TITLE,
+        ARTICLE_TYPE,
+        TYPE,
+        CONTENT,
+        CREATE_TIME,
+        DRAFT,
+        PICTURE,
+        DESCRIPTION
+        )
+        VALUES
+        (
+        #{title},
+        #{articleType},
+        #{type},
+        #{content},
+        now(),
+        #{draft},
+        #{picture},
+        #{description}
+        )
+    </insert>
+
+    <select id="selectArticleById" parameterType="Integer" resultMap="ArticleResult">
+        SELECT
+        ID,
+        TITLE,
+        ARTICLE_TYPE,
+        TYPE,
+        CONTENT,
+        PICTURE,
+        DESCRIPTION
+        FROM
+        ARTICLE
+        WHERE
+        ID = #{id}
+    </select>
+
+    <update id="updateArticle" parameterType="Article">
+        UPDATE
+        ARTICLE
+        SET
+        TITLE = #{title},
+        ARTICLE_TYPE = #{articleType},
+        TYPE = #{type},
+        CONTENT = #{content},
+        PICTURE = #{picture},
+        DESCRIPTION = #{description},
+        DRAFT = #{draft}
+        WHERE
+        ID = #{id}
+    </update>
+</mapper>

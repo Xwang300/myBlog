@@ -53,7 +53,7 @@
   <div  class="m-padded-tb-big">
     <div class="ui container">
       <!--消息提示-->
-      <div class="ui success message" style="display: none;">
+      <div id="message" class="ui success message" style="display: none">
         <i class="close icon"></i>
         <div class="">提示：恭喜，操作成功！</div>
       </div>
@@ -74,8 +74,8 @@
             <td th:text="${picture.place}">深圳</td>
             <td th:text="${picture.url}"></td>
             <td>
-              <a href="#" class="ui mini teal basic button">编辑</a>
-              <a href="#" onclick="return confirm('确定要删除该照片吗？三思啊! 删了可就没了！')" class="ui mini red basic button">删除</a>
+<!--              <a href="#" class="ui mini teal basic button">编辑</a>-->
+              <a href="javascript:void(0);" th:onclick="deleteOperation([[${picture.id}]])" class="ui mini red basic button">删除</a>
             </td>
           </tr>
         </tbody>
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="ten wide column" align="center">
-                  <p>第 <span th:text="${pageInfo.pages}"></span> 页，共 <span th:text="${pageInfo.total}"></span> 页</p>
+                  <p>第 <span th:text="${pageInfo.pages}"></span> 页，共 <span th:text="${pageInfo.total}"></span> 条</p>
 <!--                    ，有 <span></span> 个分类</p>-->
                 </div>
 
@@ -177,7 +177,9 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 
-  <script>
+<script type="text/javascript" th:inline="javascript">
+
+  var rootUrl=[[${#httpServletRequest.getContextPath()}]];
 
       // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
 
@@ -235,6 +237,22 @@
           .closest('.message')
           .transition('fade');
       });
+
+    function deleteOperation(id){
+      var flag = confirm('确定要删除该照片吗？三思啊! 删了可就没了！')
+      if(flag){
+        $.ajax({
+          type : 'GET',
+          url : rootUrl+'/admin/picture/deletePicture?id='+id,
+          success: function (data) {
+            if ("00000"==data.resCode){
+              alert(data.resMsg);
+              window.location.reload();
+            }
+          }
+        })
+      }
+    }
   </script>
 </body>
 </html>

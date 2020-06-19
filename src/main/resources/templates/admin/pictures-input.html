@@ -65,7 +65,7 @@
           </div>
           <div class="ui left labeled input m-margin-top">
             <label class="ui teal basic label">图片地址</label>
-            <input type="text" name="url" placeholder="图片地址">
+            <input type="text" name="url" placeholder="图片地址" value="http://122.51.201.14/">
           </div>
           <div class="ui left labeled input m-margin-top">
             <label class="ui teal basic label">图片描述</label>
@@ -73,6 +73,10 @@
           </div>
         </div>
 
+        <div class="ui success message" th:style="${operation==true}?'display: block':'display: none'">
+          <i class="close icon"></i>
+          <div class="">提示：恭喜，操作成功！</div>
+        </div>
         <div class="ui error message"></div>
           <div class="ui negative message" style="display: none;">
             <i class="close icon"></i>
@@ -80,7 +84,7 @@
             <p >提交信息不符合规则</p>
           </div>
         <div class="ui right aligned container">
-          <button type="button" class="ui button" onclick="window.history.go(-1)" >返回</button>
+          <a th:href="@{/admin/picture}"><button type="button" class="ui button">返回</button></a>
           <button class="ui teal submit button">提交</button>
         </div>
 
@@ -217,16 +221,35 @@
 
     $('.ui.form').form({
       fields : {
-        title : {
-          identifier: 'pictureaddress',
+        url: {
+          identifier: 'url',
           rules: [{
-            type : 'empty',
+            type: 'empty',
             prompt: '请输入照片地址'
+          }]
+        },
+        name: {
+          identifier: 'name',
+          rules: [{
+            type: 'empty',
+            prompt: '请输入图片名称'
+          }]
+        },
+        place: {
+          identifier: 'place',
+          rules: [{
+            type: 'empty',
+            prompt: '请输入拍摄地点'
           }]
         }
       }
     });
 
+      //消息提示关闭初始化
+      $('.message .close')
+        .on('click', function () {
+          $(this).closest('.message').transition('fade');
+        });
   </script>
 </body>
 </html>

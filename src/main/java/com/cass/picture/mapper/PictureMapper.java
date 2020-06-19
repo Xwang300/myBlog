@@ -14,4 +14,8 @@ import java.util.List;
 public interface PictureMapper {
 
     List<Picture> selectAllPictures();
+
+    Integer insertPicture(Picture picture);
+
+    Integer deletePictureById(int id);
 }

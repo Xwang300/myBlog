@@ -4,6 +4,11 @@ server:
   servlet:
     context-path: /blog
 spring:
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: 106.14.19.15:9300
+
   # 数据库链接
   datasource:
     url: jdbc:mysql://122.51.201.14:3306/wangxin?useUnicode=true&characterEncoding=utf-8&useSSL=false
