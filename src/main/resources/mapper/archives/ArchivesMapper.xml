@@ -6,16 +6,20 @@
 <mapper namespace="com.cass.archives.mapper.ArchivesMapper">
    
    <resultMap id="TimeLineResult" type="TimeLineResp">
+       <result column="ID" property="id"/>
        <result column="TITLE" property="title"/>
        <result column="CREATE_TIME" property="createTime"/>
    </resultMap>
 
    <select id="selectAllTimeLine" resultMap="TimeLineResult">
        SELECT
+       ID,
        TITLE,
        CREATE_TIME
        FROM
        ARTICLE
+       WHERE
+       DRAFT = '1'
        ORDER BY
        CREATE_TIME
        DESC

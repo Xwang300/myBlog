@@ -72,6 +72,24 @@
         DESC
     </select>
 
+    <select id="selectArticles" resultMap="ArticleResult">
+        SELECT
+        ID,
+        TITLE,
+        DESCRIPTION,
+        DATE_FORMAT(CREATE_TIME,'%Y-%m-%d') CREATE_TIME,
+        PICTURE
+        FROM
+        ARTICLE
+        WHERE
+        TYPE = '1'
+        AND
+        DRAFT = '1'
+        ORDER BY
+        CREATE_TIME
+        DESC
+    </select>
+
 
     <delete id="deleteArticleById" parameterType="Integer">
         DELETE
@@ -122,6 +140,23 @@
         ID = #{id}
     </select>
 
+    <select id="selectArticleDetailById" parameterType="Integer" resultMap="ArticleResult">
+        SELECT
+        a.ID,
+        a.TITLE,
+        b.NAME ARTICLE_TYPE,
+        a.CONTENT,
+        DATE_FORMAT(a.CREATE_TIME,'%Y-%m-%d %H:%I:%S') CREATE_TIME
+        FROM
+        ARTICLE a
+        LEFT JOIN
+        ARTICLE_TYPE b
+        ON
+        a.ARTICLE_TYPE = b.ID
+        WHERE
+        a.ID = #{id}
+    </select>
+
     <update id="updateArticle" parameterType="Article">
         UPDATE
         ARTICLE
@@ -136,4 +171,5 @@
         WHERE
         ID = #{id}
     </update>
+
 </mapper>

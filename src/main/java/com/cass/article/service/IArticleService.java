@@ -26,4 +26,8 @@ public interface IArticleService {
     Article selectArticleById(Integer id);
 
     Integer updateArticle(Article article);
+
+    List<Article> selectArticles();
+
+    Article selectArticleDetailById(Integer id);
 }

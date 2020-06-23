@@ -34,12 +34,12 @@
                 <a href="#" target="_blank" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--</div>-->
             <div class="right m-item item m-mobile-hide">
-                <form name="search" action="#" method="post" target="_blank">
-                    <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">
-                        <input style="color: white" type="text" name="query" placeholder="Search....">
-                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
-                    </div>
-                </form>
+                <!--                <form name="search" action="#" th:action="@{/search/searchPage}" method="get" target="_blank">-->
+                <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">
+                    <input style="color: white;" type="text" id="query" placeholder="Search...." autocomplete="off">
+                    <i onclick="searchArticle()" class="search link icon"></i>
+                </div>
+                <!--                </form>-->
             </div>
         </div>
     </div>

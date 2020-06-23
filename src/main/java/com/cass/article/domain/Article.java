@@ -1,6 +1,11 @@
 package com.cass.article.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+
+import java.io.Serializable;
 
 /**
  * @Author: Xin Wang
@@ -8,8 +13,13 @@ import lombok.Data;
  */
 
 @Data
-public class Article {
+@Document(indexName = "articles",type = "Article")
+@Mapping(mappingPath = "/elasticsearch/es-article.json")
+public class Article implements Serializable {
 
+    private static final long serialVersionUID = 1235839068726207926L;
+
+    @Id
     private Integer id;
 
     private String title;

@@ -60,4 +60,14 @@ public class ArticleServiceImpl implements IArticleService {
         return articleMapper.updateArticle(article);
     }
 
+    @Override
+    public List<Article> selectArticles() {
+        return articleMapper.selectArticles();
+    }
+
+    @Override
+    public Article selectArticleDetailById(Integer id) {
+        return articleMapper.selectArticleDetailById(id);
+    }
+
 }

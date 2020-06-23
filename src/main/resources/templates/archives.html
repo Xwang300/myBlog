@@ -27,12 +27,12 @@
           <a href="#" th:href="@{/info}" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
         <!--</div>-->
         <div class="right m-item item m-mobile-hide">
-<!--          <form name="search" action="#" method="post" target="_blank">-->
-<!--            <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">-->
-<!--              <input style="color: white" type="text" name="query" placeholder="Search...." >-->
-<!--              <i onclick="document.forms['search'].submit()" class="search link icon"></i>-->
-<!--            </div>-->
-<!--          </form>-->  <!--搜索待开发-->
+          <!--                <form name="search" action="#" th:action="@{/search/searchPage}" method="get" target="_blank">-->
+          <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">
+            <input style="color: white;" type="text" id="query" placeholder="Search...." autocomplete="off">
+            <i onclick="searchArticle()" class="search link icon"></i>
+          </div>
+          <!--                </form>-->
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
               <div>
                 <time th:text="${#dates.format(timeLine.createTime,'yyyy-MM-dd')}">2020/06/01</time>
                 <div class="scientist" >
-                  <a href="#" target="_blank">
+                  <a href="#" target="_blank" th:href="@{/article/detail(id=${timeLine.id})}">
                     <h3 class="state" style="text-align:center;font-size: 16px;color: #000;" th:text="${timeLine.title}">域名</h3>
                   </a>
                 </div>
@@ -131,8 +131,14 @@
   <script src="../static/lib/timeline/timeline.js" th:src="@{static/lib/timeline/timeline.js}"></script>
 
 
-  <script>
+  <script type="text/javascript" th:inline="javascript">
 
+    var rootUrl=[[${#httpServletRequest.getContextPath()}]];
+
+    function searchArticle(){
+      var query = $("#query").val();
+      window.location.href = rootUrl+ "/search/searchPage?query="+query;
+    }
     // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
 
     $('.menu.toggle').click(function () {
