@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+  <title th:text="${article.title}"></title>
   <link href="../static/images/me.jpg" th:href="@{/static/images/me.jpg}" rel="icon" type="image/x-ico">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
   <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/static/css/typo.css}">
@@ -86,8 +86,7 @@
 <div id="waypoint" class="animated fadeIn">
   <div class="ui container m-opacity box-shadow-max">
     <!--内容-->
-    <div class="ui attached padded segment">
-
+      <div class="ui attached padded segment">
 
       <!--中间主要内容部分-->
       <div id="content" class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large">
@@ -95,6 +94,10 @@
       </div>
 
       <div class="ui horizontal divider">end</div>
+
+      </div>
+  </div>
+</div>
 
 
 <!--      &lt;!&ndash;赞赏&ndash;&gt;-->
@@ -315,35 +318,41 @@
 <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/static/lib/tocbot/tocbot.min.js}"></script>
 <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/static/lib/waypoints/jquery.waypoints.min.js}"></script>
 
-      <script src="editor.md-master/lib/marked.min.js" th:src="@{/static/lib/editormd/lib/marked.min.js}"></script>
-      <script src="editor.md-master/lib/prettify.min.js" th:src="@{/static/lib/editormd/lib/flowchart.min.js}"></script>
-      <script src="editor.md-master/lib/raphael.min.js" th:src="@{/static/lib/editormd/lib/jquery.flowchart.min.js}"></script>
-      <script src="editor.md-master/lib/underscore.min.js" th:src="@{/static/lib/editormd/lib/prettify.min.js}"></script>
-      <script src="editor.md-master/lib/sequence-diagram.min.js" th:src="@{/static/lib/editormd/lib/raphael.min.js}"></script>
-      <script src="editor.md-master/lib/flowchart.min.js" th:src="@{/static/lib/editormd/lib/sequence-diagram.min.js}"></script>
-      <script src="editor.md-master/lib/jquery.flowchart.min.js" th:src="@{/static/lib/editormd/lib/underscore.min.js}"></script>
-      <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/static/lib/editormd/editormd.min.js}"></script>
+<script src="editor.md-master/lib/marked.min.js" th:src="@{/static/lib/editormd/lib/marked.min.js}"></script>
+<script src="editor.md-master/lib/prettify.min.js" th:src="@{/static/lib/editormd/lib/flowchart.min.js}"></script>
+<script src="editor.md-master/lib/raphael.min.js" th:src="@{/static/lib/editormd/lib/jquery.flowchart.min.js}"></script>
+<script src="editor.md-master/lib/underscore.min.js" th:src="@{/static/lib/editormd/lib/prettify.min.js}"></script>
+<script src="editor.md-master/lib/sequence-diagram.min.js" th:src="@{/static/lib/editormd/lib/raphael.min.js}"></script>
+<script src="editor.md-master/lib/flowchart.min.js" th:src="@{/static/lib/editormd/lib/sequence-diagram.min.js}"></script>
+<script src="editor.md-master/lib/jquery.flowchart.min.js" th:src="@{/static/lib/editormd/lib/underscore.min.js}"></script>
+<script src="../../static/lib/editormd/editormd.min.js" th:src="@{/static/lib/editormd/editormd.min.js}"></script>
 
-      <script type="text/javascript">
-        testEditormdView2 = editormd.markdownToHTML("content", {
-          htmlDecode      : "style,script,iframe",  // you can filter tags decode
-          emoji           : true,
-          taskList        : true,
-          tex             : true,  // 默认不解析
-          flowChart       : true,  // 默认不解析
-          sequenceDiagram : true  // 默认不解析
-        });
-      </script>
+<script type="text/javascript" th:inline="javascript">
+
+    testEditormdView2 = editormd.markdownToHTML("content", {
+        htmlDecode      : "style,script,iframe",  // you can filter tags decode
+        emoji           : true,
+        taskList        : true,
+        tex             : true,  // 默认不解析
+        flowChart       : true,  // 默认不解析
+        sequenceDiagram : true  // 默认不解析
+    });
 
 
-        <script type="text/javascript" th:inline="javascript">
+    var rootUrl=[[${#httpServletRequest.getContextPath()}]];
 
-            var rootUrl=[[${#httpServletRequest.getContextPath()}]];
+    function searchArticle(){
+        var query = $("#query").val();
+        window.location.href = rootUrl+ "/search/searchPage?query="+query;
+    }
 
-            function searchArticle(){
-                var query = $("#query").val();
-                window.location.href = rootUrl+ "/search/searchPage?query="+query;
-            }
+
+</script>
+
+
+
+<script type="text/javascript" >
+
 
     // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
 
