@@ -11,6 +11,7 @@
         <package name="com.cass.archives.domain"/>
         <package name="com.cass.picture.domain"/>
         <package name="com.cass.article.domain"/>
+        <package name="com.cass.message.domain"/>
     </typeAliases>
     
 </configuration>

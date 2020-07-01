@@ -67,7 +67,7 @@
           <input type="hidden" name="parentMessage.id" value="-1">
           <!--                    留言区-->
           <div class="field">
-              <textarea name="content" placeholder="请输入留言信息..." >功能开发中.......</textarea>
+              <textarea name="content" id="content" placeholder="请输入留言信息..." ></textarea>
           </div>
           <div class="ui grid">
               <!--                    输入姓名-->
@@ -75,24 +75,24 @@
               <div class="field m-mobile-wide m-margin-bottom-small">
                   <div class="ui left icon input">
                       <i class="user icon"></i>
-                      <input type="text" name="nickname" placeholder="Id">
+                      <input type="text" name="nickname" id="nickname" placeholder="请输入昵称...">
                   </div>
               </div>
               </div>
 
-              <!--                        输入邮箱-->
-              <div class="five wide column">
-              <div class="field m-mobile-wide m-margin-bottom-small">
-                  <div class="ui left icon input">
-                      <i class="mail icon"></i>
-                      <input type="text" name="email" placeholder="Email">
-                  </div>
-              </div>
-              </div>
+<!--              &lt;!&ndash;                        输入邮箱&ndash;&gt;-->
+<!--              <div class="five wide column">-->
+<!--              <div class="field m-mobile-wide m-margin-bottom-small">-->
+<!--                  <div class="ui left icon input">-->
+<!--                      <i class="mail icon"></i>-->
+<!--                      <input type="text" name="email" placeholder="Email">-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--              </div>-->
 
-              <div class="right aligned six wide column">
+              <div class="right aligned ten wide column">
               <div class="field m-mobile-wide m-margin-bottom-small">
-                  <button id="messagepost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+                  <button id="messagepost-btn" type="button" class="ui teal button m-mobile-wide" onclick="insertMessage()"><i class="edit icon"></i>发布</button>
               </div>
               </div>
           </div>
@@ -103,49 +103,48 @@
               <div>
                   <div class="ui threaded comments" style="max-width: 100%;">
                       <h3 class="ui dividing header">留言</h3>
-                      <div class="comment">
+                      <div th:each="message:${messages}" class="comment">
                           <a class="avatar">
                               <img src="../static/images/avatar.png" th:src="@{static/images/avatar.png}">
                           </a>
                           <div class="content">
                               <a class="author">
-                                  <span>Matt</span>
+                                  <span th:text="${message.name}">Matt</span>
                                   <div class="ui mini basic teal left pointing label m-padded-mini">栈主</div>
                               </a>
                               <div class="metadata">
-                                  <span class="date">今天下午 5:42</span>
+                                  <span class="date" th:text="${#dates.format(message.createTime,'yyyy-MM-dd hh:mm')}">今天下午 5:42</span>
                               </div>
-                              <div class="text">太赞了！ </div>
+                              <div class="text" th:text="${message.content}">太赞了！ </div>
                               <div class="actions">
-                                  <a class="reply" data-messageid="1" data-messagenickname="Matt" onclick="reply(this)">回复</a>
-                                  <a class="delete" href="#" onclick="return confirm('确定要删除该评论吗？三思啊! 删了可就没了！')">删除</a>
+<!--                                  <a class="reply" data-messageid="1" data-messagenickname="Matt" onclick="reply(this)">回复</a>-->
+<!--                                  <a class="delete" href="#" onclick="return confirm('确定要删除该评论吗？三思啊! 删了可就没了！')">删除</a>-->
                               </div>
                           </div>
                           <!--子集留言-->
-                          <div class="comments">
-                              <div class="comment">
-                                  <a class="avatar">
-                                      <img src="../static/images/avatar.png" th:src="@{static/images/avatar.png}">
-                                  </a>
-                                  <div class="content">
-                                      <a class="author">
-                                          <span>小红</span>
-                                          <div class="ui mini basic teal left pointing label m-padded-mini">栈主</div>
-                                          &nbsp;<span class="m-teal">@ 小白</span>
-                                      </a>
-                                      <div class="metadata">
-                                          <span class="date">今天下午 5:42</span>
-                                      </div>
-                                      <div class="text">太赞了！ </div>
-                                      <div class="actions">
-                                          <a class="reply" data-messageid="1" data-messagenickname="Matt" onclick="reply(this)">回复</a>
-                                          <a class="delete" href="#" onclick="return confirm('确定要删除该评论吗？三思啊! 删了可就没了！')">删除</a>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+<!--                          <div class="comments">-->
+<!--                              <div class="comment">-->
+<!--                                  <a class="avatar">-->
+<!--                                      <img src="../static/images/avatar.png" th:src="@{static/images/avatar.png}">-->
+<!--                                  </a>-->
+<!--                                  <div class="content">-->
+<!--                                      <a class="author">-->
+<!--                                          <span>小红</span>-->
+<!--                                          <div class="ui mini basic teal left pointing label m-padded-mini">栈主</div>-->
+<!--                                          &nbsp;<span class="m-teal">@ 小白</span>-->
+<!--                                      </a>-->
+<!--                                      <div class="metadata">-->
+<!--                                          <span class="date">今天下午 5:42</span>-->
+<!--                                      </div>-->
+<!--                                      <div class="text">太赞了！ </div>-->
+<!--                                      <div class="actions">-->
+<!--                                          <a class="reply" data-messageid="1" data-messagenickname="Matt" onclick="reply(this)">回复</a>-->
+<!--                                          <a class="delete" href="#" onclick="return confirm('确定要删除该评论吗？三思啊! 删了可就没了！')">删除</a>-->
+<!--                                      </div>-->
+<!--                                  </div>-->
+<!--                              </div>-->
+<!--                          </div>-->
                       </div>
-
                   </div>
               </div>
 
@@ -241,6 +240,33 @@
         var query = $("#query").val();
         window.location.href = rootUrl+ "/search/searchPage?query="+query;
     }
+
+    function insertMessage(){
+        var message = {
+            'name' : $("#nickname").val(),
+            'content' : $("#content").val()
+        }
+
+        message = JSON.stringify(message);
+
+        $.ajax({
+            type : 'POST',
+            url : rootUrl+'/message/insertMessage',
+            dataType : 'json',
+            contentType:"application/json;charset=utf-8",
+            data : message,
+            success:function (data) {
+                if("00000"==data.resCode){
+                    alert(data.resMsg);
+                    window.location.reload();
+                }else{
+                    alert(data.resMsg);
+                }
+            }
+        })
+
+
+    }
     // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
 
 
@@ -310,15 +336,15 @@
                 identifier: 'nickname',
                 rules: [{
                     type: 'empty',
-                    prompt: '请输入你的大名'
+                    prompt: '请输入您的昵称'
                 }]
-            },
-            type: {
-                identifier: 'email',
-                rules: [{
-                    type: 'email',
-                    prompt: '请填写正确的邮箱地址'
-                }]
+            // },
+            // type: {
+            //     identifier: 'email',
+            //     rules: [{
+            //         type: 'email',
+            //         prompt: '请填写正确的邮箱地址'
+            //     }]
             }
         }
     });
@@ -328,16 +354,16 @@
     //     $("#message-container").load(/*[[@{/messagecomment}]]*/"messagecomment");
     // });
 
-    // 校验信息
-    $('#messagepost-btn').click(function () {
-        var boo = $('.ui.form').form('validate form');
-        if (boo) {
-            console.log('校验成功');
-            postData();
-        } else {
-            console.log('校验失败');
-        }
-    });
+    // // 校验信息
+    // $('#messagepost-btn').click(function () {
+    //     var boo = $('.ui.form').form('validate form');
+    //     if (boo) {
+    //         console.log('校验成功');
+    //         postData();
+    //     } else {
+    //         console.log('校验失败');
+    //     }
+    // });
 
     //发送请求给后端
 //     function postData() {
