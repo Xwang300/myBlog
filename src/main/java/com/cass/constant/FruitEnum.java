@@ -13,7 +13,8 @@ public enum FruitEnum {
 
     APPLE(1,"苹果"),
     ORANGE(2,"橘子"),
-    WATERMELON(3,"西瓜");
+    WATERMELON(3,"西瓜"),
+    PEAR(4,"梨");
 
     private Integer id;
 
